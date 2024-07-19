@@ -1,5 +1,7 @@
-import express, { Application } from 'express'
 import 'dotenv/config'
+import express, { Application } from 'express'
+
+import appRouter from '@/routes/app.route'
 
 export default class Server {
   private app: Application
@@ -15,12 +17,14 @@ export default class Server {
     this.startServer()
   }
 
-  private setupMiddlewares() {
+  private setupMiddlewares(): void {
     // parse json của client gởi lên, chuyển thành dạnh object để xử lý
     this.app.use(express.json())
   }
-  private setupRoutes() {}
-  private setupGlobalError() {}
+  private setupRoutes(): void {
+    appRouter(this.app)
+  }
+  private setupGlobalError(): void {}
 
   private startServer() {
     const port = process.env.PORT || 4000
